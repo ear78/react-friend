@@ -12,7 +12,8 @@ class App extends Component {
 	// 	};
 	// }
 	state = {
-		title: 'Welcome to Elliot React'
+		title: 'Welcome to Elliot React',
+		persons: [{ name: 'Max', age: 28 }, { name: 'Manu', age: 29 }]
 	};
 
 	updateTitle(e) {
@@ -20,6 +21,16 @@ class App extends Component {
 			title: e.target.value
 		});
 	}
+	// using es6 doesn't require .bind(this) in the click handler
+	handleSwitchName = () => {
+		this.setState({
+			persons: [
+				{ name: 'Maximilian', age: 28 },
+				{ name: 'Manu', age: 26 }
+			]
+		});
+	};
+
 	render() {
 		return (
 			<div className="App">
@@ -34,9 +45,15 @@ class App extends Component {
 				</p>
 				<hr />
 				<Friends />
-				<button>Switch Name</button>
-				<Person name="Max" age="28" />
-				<Person name="Manu" age="29">
+				<button onClick={this.handleSwitchName}>Switch Name</button>
+				<Person
+					name={this.state.persons[0].name}
+					age={this.state.persons[0].age}
+				/>
+				<Person
+					name={this.state.persons[1].name}
+					age={this.state.persons[1].age}
+				>
 					My Hobbies: Racing!
 				</Person>
 			</div>
