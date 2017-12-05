@@ -3,11 +3,14 @@ import logo from './logo.svg';
 import './App.css';
 import Friends from './friends';
 import Person from './Person/Person';
+import UserInput from './User/UserInput';
+import UserOutput from './User/UserOutput';
 
 class App extends Component {
 	state = {
 		title: 'Welcome to Elliot React',
-		persons: [{ name: 'Max', age: 28 }, { name: 'Manu', age: 29 }]
+		persons: [{ name: 'Max', age: 28 }, { name: 'Manu', age: 29 }],
+		username: 'Aligators'
 	};
 
 	updateTitle(e) {
@@ -33,7 +36,22 @@ class App extends Component {
 		});
 	};
 
+	changeStatePara = newUsername => {
+		this.setState({
+			username: 'Eagles'
+		});
+	};
+
 	render() {
+		const style = {
+			backgroundColor: '#222',
+			textTransform: 'uppercase',
+			padding: '8px',
+			border: '1px solid gainsboro',
+			color: 'white',
+			borderRadius: '3px',
+			cursor: 'pointer'
+		};
 		return (
 			<div className="App">
 				<header className="App-header">
@@ -48,7 +66,10 @@ class App extends Component {
 				<hr />
 				<Friends />
 				{/*this syntax is not as efficient for rendering, use bind*/}
-				<button onClick={() => this.handleSwitchName('Maximilian!!')}>
+				<button
+					style={style}
+					onClick={() => this.handleSwitchName('Maximilian!!')}
+				>
 					Switch Name
 				</button>
 				<Person
@@ -65,6 +86,12 @@ class App extends Component {
 				>
 					My Hobbies: Racing!
 				</Person>
+
+				<UserInput />
+				<UserOutput
+					click={this.changeStatePara}
+					username={this.state.username}
+				/>
 			</div>
 		);
 	}

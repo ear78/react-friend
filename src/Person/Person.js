@@ -5,7 +5,7 @@ import Person from './Person.css';
 
 const person = props => {
 	return (
-		<div>
+		<div className="Person">
 			<p className="person-para">
 				I am a Person named, {props.name} and I am {props.age} years
 				old.
