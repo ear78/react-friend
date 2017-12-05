@@ -10,7 +10,8 @@ const person = props => {
 				I am a Person named, {props.name} and I am {props.age} years
 				old.
 			</p>
-			<p>{props.children}</p>
+			{/* switch handle referenced method passed with props*/}
+			<p onClick={props.click}>{props.children}</p>
 		</div>
 	);
 };

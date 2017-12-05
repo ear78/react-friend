@@ -5,12 +5,6 @@ import Friends from './friends';
 import Person from './Person/Person';
 
 class App extends Component {
-	// constructor(props) {
-	// 	super(props);
-	// 	this.state = {
-	// 		title: 'Welcome to Elliot React'
-	// 	};
-	// }
 	state = {
 		title: 'Welcome to Elliot React',
 		persons: [{ name: 'Max', age: 28 }, { name: 'Manu', age: 29 }]
@@ -22,12 +16,10 @@ class App extends Component {
 		});
 	}
 	// using es6 doesn't require .bind(this) in the click handler
-	handleSwitchName = () => {
+	// passing in newName to setState
+	handleSwitchName = newName => {
 		this.setState({
-			persons: [
-				{ name: 'Maximilian', age: 28 },
-				{ name: 'Manu', age: 26 }
-			]
+			persons: [{ name: newName, age: 28 }, { name: 'Manu', age: 26 }]
 		});
 	};
 
@@ -45,12 +37,18 @@ class App extends Component {
 				</p>
 				<hr />
 				<Friends />
-				<button onClick={this.handleSwitchName}>Switch Name</button>
+				{/*this syntax is not as efficient for rendering, use bind*/}
+				<button onClick={() => this.handleSwitchName('Maximilian!!')}>
+					Switch Name
+				</button>
 				<Person
 					name={this.state.persons[0].name}
 					age={this.state.persons[0].age}
 				/>
+				{/* handleSwitch method passed property named anything we want,
+				passing argument with bind(this, parameter)*/}
 				<Person
+					click={this.handleSwitchName.bind(this, 'Maximus!')}
 					name={this.state.persons[1].name}
 					age={this.state.persons[1].age}
 				>
