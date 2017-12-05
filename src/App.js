@@ -23,6 +23,16 @@ class App extends Component {
 		});
 	};
 
+	//two way binding example with method passed through props to person component
+	nameChangeHandler = event => {
+		this.setState({
+			persons: [
+				{ name: event.target.value, age: 28 },
+				{ name: 'Manu', age: 29 }
+			]
+		});
+	};
+
 	render() {
 		return (
 			<div className="App">
@@ -42,6 +52,7 @@ class App extends Component {
 					Switch Name
 				</button>
 				<Person
+					changed={this.nameChangeHandler}
 					name={this.state.persons[0].name}
 					age={this.state.persons[0].age}
 				/>

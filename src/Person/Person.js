@@ -12,6 +12,7 @@ const person = props => {
 			</p>
 			{/* switch handle referenced method passed with props*/}
 			<p onClick={props.click}>{props.children}</p>
+			<input type="text" onChange={props.changed} value={props.name} />
 		</div>
 	);
 };
