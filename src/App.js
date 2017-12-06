@@ -10,7 +10,8 @@ class App extends Component {
 	state = {
 		title: 'Welcome to Elliot React',
 		persons: [{ name: 'Max', age: 28 }, { name: 'Manu', age: 29 }],
-		username: 'Aligators'
+		username: 'Aligators',
+		showPersons: false
 	};
 
 	updateTitle(e) {
@@ -46,6 +47,11 @@ class App extends Component {
 		this.setState({ username: e.target.value });
 	};
 
+	togglePersonHandler = () => {
+		const doesShow = this.state.showPersons;
+		this.setState({ showPersons: !doesShow });
+	};
+
 	render() {
 		const style = {
 			backgroundColor: '#222',
@@ -63,33 +69,33 @@ class App extends Component {
 					<h1 className="App-title">{this.state.title}</h1>
 				</header>
 				<p className="App-intro">
-					To get started, edit <code>src/App.js</code> and save to
-					reload. Type in input box to change title.
+					Type in input box to change title.
 					<input type="text" onChange={this.updateTitle.bind(this)} />
 				</p>
 				<hr />
 				<Friends />
 				{/*this syntax is not as efficient for rendering, use bind*/}
-				<button
-					style={style}
-					onClick={() => this.handleSwitchName('Maximilian!!')}
-				>
+				<button style={style} onClick={this.togglePersonHandler}>
 					Switch Name
 				</button>
-				<Person
-					changed={this.nameChangeHandler}
-					name={this.state.persons[0].name}
-					age={this.state.persons[0].age}
-				/>
-				{/* handleSwitch method passed property named anything we want,
-				passing argument with bind(this, parameter)*/}
-				<Person
-					click={this.handleSwitchName.bind(this, 'Maximus!')}
-					name={this.state.persons[1].name}
-					age={this.state.persons[1].age}
-				>
-					My Hobbies: Racing!
-				</Person>
+				{this.state.showPersons ? (
+					<div>
+						<Person
+							changed={this.nameChangeHandler}
+							name={this.state.persons[0].name}
+							age={this.state.persons[0].age}
+						/>
+						{/* handleSwitch method passed property named anything we want,
+						passing argument with bind(this, parameter)*/}
+						<Person
+							click={this.handleSwitchName.bind(this, 'Maximus!')}
+							name={this.state.persons[1].name}
+							age={this.state.persons[1].age}
+						>
+							My Hobbies: Racing!
+						</Person>
+					</div>
+				) : null}
 
 				{/* PASSING PROPS TO COMPONENT */}
 				<UserInput
