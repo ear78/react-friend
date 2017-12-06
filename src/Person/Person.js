@@ -6,12 +6,13 @@ import Person from './Person.css';
 const person = props => {
 	return (
 		<div className="Person">
+			<button onClick={props.click}>Del</button>
 			<p className="person-para">
 				I am a Person named, {props.name} and I am {props.age} years
 				old.
 			</p>
 			{/* switch handle referenced method passed with props*/}
-			<p onClick={props.click}>{props.children}</p>
+			<p>{props.children}</p>
 			<input type="text" onChange={props.changed} value={props.name} />
 		</div>
 	);

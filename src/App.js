@@ -9,7 +9,10 @@ import UserOutput from './User/UserOutput';
 class App extends Component {
 	state = {
 		title: 'Welcome to Elliot React',
-		persons: [{ name: 'Max', age: 28 }, { name: 'Manu', age: 29 }],
+		persons: [
+			{ id: 'assdf', name: 'Max', age: 28 },
+			{ id: 'fdsa12', name: 'Manu', age: 29 }
+		],
 		username: 'Aligators',
 		showPersons: false
 	};
@@ -19,21 +22,30 @@ class App extends Component {
 			title: e.target.value
 		});
 	}
-	// using es6 doesn't require .bind(this) in the click handler
-	// passing in newName to setState
-	handleSwitchName = newName => {
-		this.setState({
-			persons: [{ name: newName, age: 28 }, { name: 'Manu', age: 26 }]
-		});
+
+	deletePersonHandler = personIndex => {
+		const persons = [...this.state.persons];
+		persons.splice(personIndex, 1);
+		this.setState({ persons: persons });
 	};
 
 	//two way binding example with method passed through props to person component
-	nameChangeHandler = event => {
+	nameChangeHandler = (event, id) => {
+		const personIndex = this.state.persons.findIndex(p => {
+			return p.id === id;
+		});
+
+		const person = {
+			...this.state.persons[personIndex]
+		};
+
+		person.name = event.target.value;
+
+		const persons = [...this.state.persons];
+		persons[personIndex] = person;
+
 		this.setState({
-			persons: [
-				{ name: event.target.value, age: 28 },
-				{ name: 'Manu', age: 29 }
-			]
+			persons: persons
 		});
 	};
 
@@ -62,6 +74,41 @@ class App extends Component {
 			borderRadius: '3px',
 			cursor: 'pointer'
 		};
+
+		let persons = null;
+		if (this.state.showPersons) {
+			persons = (
+				<div>
+					{this.state.persons.map((person, index) => {
+						return (
+							<Person
+								key={person.id}
+								click={() => this.deletePersonHandler(index)}
+								name={person.name}
+								age={person.age}
+								changed={event =>
+									this.nameChangeHandler(event, person.id)
+								}
+							/>
+						);
+					})}
+					{/*<Person
+						changed={this.nameChangeHandler}
+						name={this.state.persons[0].name}
+						age={this.state.persons[0].age}
+					/>*/}
+					{/* handleSwitch method passed property named anything we want,
+					passing argument with bind(this, parameter)*/}
+					{/*<Person
+						click={this.handleSwitchName.bind(this, 'Maximus!')}
+						name={this.state.persons[1].name}
+						age={this.state.persons[1].age}
+					>
+						My Hobbies: Racing!
+					</Person>*/}
+				</div>
+			);
+		}
 		return (
 			<div className="App">
 				<header className="App-header">
@@ -78,24 +125,7 @@ class App extends Component {
 				<button style={style} onClick={this.togglePersonHandler}>
 					Switch Name
 				</button>
-				{this.state.showPersons ? (
-					<div>
-						<Person
-							changed={this.nameChangeHandler}
-							name={this.state.persons[0].name}
-							age={this.state.persons[0].age}
-						/>
-						{/* handleSwitch method passed property named anything we want,
-						passing argument with bind(this, parameter)*/}
-						<Person
-							click={this.handleSwitchName.bind(this, 'Maximus!')}
-							name={this.state.persons[1].name}
-							age={this.state.persons[1].age}
-						>
-							My Hobbies: Racing!
-						</Person>
-					</div>
-				) : null}
+				{persons}
 
 				{/* PASSING PROPS TO COMPONENT */}
 				<UserInput
