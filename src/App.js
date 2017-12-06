@@ -42,6 +42,10 @@ class App extends Component {
 		});
 	};
 
+	usernameChangedHandler = e => {
+		this.setState({ username: e.target.value });
+	};
+
 	render() {
 		const style = {
 			backgroundColor: '#222',
@@ -87,7 +91,11 @@ class App extends Component {
 					My Hobbies: Racing!
 				</Person>
 
-				<UserInput />
+				{/* PASSING PROPS TO COMPONENT */}
+				<UserInput
+					changed={this.usernameChangedHandler}
+					currentName={this.state.username}
+				/>
 				<UserOutput
 					click={this.changeStatePara}
 					username={this.state.username}
