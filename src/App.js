@@ -18,7 +18,8 @@ class App extends Component {
 		],
 		username: 'Aligators',
 		showPersons: false,
-		userInput: ''
+		userInput: '',
+		text: 'test'
 	};
 
 	updateTitle(e) {
@@ -115,23 +116,15 @@ class App extends Component {
 							/>
 						);
 					})}
-					{/*<Person
-						changed={this.nameChangeHandler}
-						name={this.state.persons[0].name}
-						age={this.state.persons[0].age}
-					/>*/}
-					{/* handleSwitch method passed property named anything we want,
-					passing argument with bind(this, parameter)*/}
-					{/*<Person
-						click={this.handleSwitchName.bind(this, 'Maximus!')}
-						name={this.state.persons[1].name}
-						age={this.state.persons[1].age}
-					>
-						My Hobbies: Racing!
-					</Person>*/}
 				</div>
 			);
+			{/* dynamic inline styling on if toggled*/}
+			style.backgroundColor = 'red';
+			style.marginBottom = '50px';
 		}
+		
+		let classes = ['red', 'bold'].join(' ');
+		
 		return (
 			<div className="App">
 				<header className="App-header">
@@ -146,7 +139,7 @@ class App extends Component {
 				<Friends />
 				{/*this syntax is not as efficient for rendering, use bind*/}
 				<button style={style} onClick={this.togglePersonHandler}>
-					Switch Name
+					Toggle People
 				</button>
 				{persons}
 

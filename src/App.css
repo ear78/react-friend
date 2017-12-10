@@ -30,3 +30,15 @@
 .light-gray {
     background-color: lightgray;
 }
+
+.tomato {
+    color: tomato;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.test {
+    color: blue;
+}
