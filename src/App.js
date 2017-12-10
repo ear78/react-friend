@@ -5,6 +5,9 @@ import Friends from './friends';
 import Person from './Person/Person';
 import UserInput from './User/UserInput';
 import UserOutput from './User/UserOutput';
+import ValidationComponent from './ValidationComponent/ValidationComponent';
+import CharComponent from './Char/CharComponent';
+
 
 class App extends Component {
 	state = {
@@ -14,7 +17,8 @@ class App extends Component {
 			{ id: 'fdsa12', name: 'Manu', age: 29 }
 		],
 		username: 'Aligators',
-		showPersons: false
+		showPersons: false,
+		userInput: ''
 	};
 
 	updateTitle(e) {
@@ -63,8 +67,27 @@ class App extends Component {
 		const doesShow = this.state.showPersons;
 		this.setState({ showPersons: !doesShow });
 	};
+	
+	handleInputLength = ( event ) => {
+		this.setState({
+			userInput: event.target.value
+		})
+	};
+	
+	deleteCharHandler = ( index ) => {
+		const text = this.state.userInput.split('');
+		text.splice(index, 1);
+		const updatedText = text.join('');
+		this.setState({userInput: updatedText});
+	}
 
 	render() {
+		const charList = this.state.userInput.split('').map((ch, index) => {
+			return <CharComponent 
+					character={ch} 
+					key={index}
+					clicked={() => this.deleteCharHandler(index)}/>
+		});
 		const style = {
 			backgroundColor: '#222',
 			textTransform: 'uppercase',
@@ -136,6 +159,16 @@ class App extends Component {
 					click={this.changeStatePara}
 					username={this.state.username}
 				/>
+				
+				<div>
+					<hr />
+					<input type="text" value={this.state.userInput} onChange={this.handleInputLength}/>
+					<p>{this.state.userInput}</p>
+					<ValidationComponent inputLength={this.state.userInput.length}/>
+					
+					<hr />
+					{charList}
+				</div>
 			</div>
 		);
 	}
